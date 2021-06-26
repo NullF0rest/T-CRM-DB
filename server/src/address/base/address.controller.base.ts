@@ -58,11 +58,9 @@ export class AddressControllerBase {
       data: {
         ...data,
 
-        customer: data.customer
-          ? {
-              connect: data.customer,
-            }
-          : undefined,
+        customer: {
+          connect: data.customer,
+        },
       },
       select: {
         address_1: true,
@@ -227,11 +225,9 @@ export class AddressControllerBase {
         data: {
           ...data,
 
-          customer: data.customer
-            ? {
-                connect: data.customer,
-              }
-            : undefined,
+          customer: {
+            connect: data.customer,
+          },
         },
         select: {
           address_1: true,

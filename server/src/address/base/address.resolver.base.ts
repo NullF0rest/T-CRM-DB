@@ -124,11 +124,9 @@ export class AddressResolverBase {
       data: {
         ...args.data,
 
-        customer: args.data.customer
-          ? {
-              connect: args.data.customer,
-            }
-          : undefined,
+        customer: {
+          connect: args.data.customer,
+        },
       },
     });
   }
@@ -171,11 +169,9 @@ export class AddressResolverBase {
         data: {
           ...args.data,
 
-          customer: args.data.customer
-            ? {
-                connect: args.data.customer,
-              }
-            : undefined,
+          customer: {
+            connect: args.data.customer,
+          },
         },
       });
     } catch (error) {

@@ -2,7 +2,7 @@ import { Company } from "../company/Company";
 import { SimCard } from "../simCard/SimCard";
 
 export type Package = {
-  company?: Company | null;
+  company?: Company;
   createdAt: Date;
   description: string | null;
   id: string;

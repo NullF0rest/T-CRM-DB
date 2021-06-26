@@ -3,8 +3,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Address } from "../../address/base/Address";
 import {
   ValidateNested,
-  IsOptional,
   IsDate,
+  IsOptional,
   IsString,
   IsBoolean,
   IsEnum,
@@ -18,22 +18,20 @@ import { Subscription } from "../../subscription/base/Subscription";
 @ObjectType()
 class Customer {
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => Address,
   })
   @ValidateNested()
   @Type(() => Address)
-  @IsOptional()
   address?: Address;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => BalanceAccount,
   })
   @ValidateNested()
   @Type(() => BalanceAccount)
-  @IsOptional()
-  balanceAccount?: BalanceAccount | null;
+  balanceAccount?: BalanceAccount;
 
   @ApiProperty({
     required: true,
@@ -163,13 +161,12 @@ class Customer {
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany" | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => Subscription,
   })
   @ValidateNested()
   @Type(() => Subscription)
-  @IsOptional()
-  subscriptions?: Subscription | null;
+  subscriptions?: Subscription;
 
   @ApiProperty({
     required: true,

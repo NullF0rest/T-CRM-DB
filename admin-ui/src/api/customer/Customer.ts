@@ -6,7 +6,7 @@ import { Subscription } from "../subscription/Subscription";
 
 export type Customer = {
   address?: Address;
-  balanceAccount?: BalanceAccount | null;
+  balanceAccount?: BalanceAccount;
   createdAt: Date;
   dateOfBirth: Date | null;
   email: string | null;
@@ -20,6 +20,6 @@ export type Customer = {
   simCards?: Array<SimCard>;
   snapshots?: Array<CustomerSnapshot>;
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany" | null;
-  subscriptions?: Subscription | null;
+  subscriptions?: Subscription;
   updatedAt: Date;
 };

@@ -20,7 +20,7 @@ class PackageUpdateInput {
   @Field(() => CompanyWhereUniqueInput, {
     nullable: true,
   })
-  company?: CompanyWhereUniqueInput | null;
+  company?: CompanyWhereUniqueInput;
 
   @ApiProperty({
     required: false,

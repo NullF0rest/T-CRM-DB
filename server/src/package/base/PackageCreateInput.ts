@@ -3,24 +3,21 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CompanyWhereUniqueInput } from "../../company/base/CompanyWhereUniqueInput";
 import {
   ValidateNested,
-  IsOptional,
   IsString,
+  IsOptional,
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
 @InputType()
 class PackageCreateInput {
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => CompanyWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => CompanyWhereUniqueInput)
-  @IsOptional()
-  @Field(() => CompanyWhereUniqueInput, {
-    nullable: true,
-  })
-  company?: CompanyWhereUniqueInput | null;
+  @Field(() => CompanyWhereUniqueInput)
+  company!: CompanyWhereUniqueInput;
 
   @ApiProperty({
     required: false,

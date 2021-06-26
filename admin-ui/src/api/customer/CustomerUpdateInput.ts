@@ -4,7 +4,7 @@ import { SubscriptionWhereUniqueInput } from "../subscription/SubscriptionWhereU
 
 export type CustomerUpdateInput = {
   address?: AddressWhereUniqueInput;
-  balanceAccount?: BalanceAccountWhereUniqueInput | null;
+  balanceAccount?: BalanceAccountWhereUniqueInput;
   dateOfBirth?: Date | null;
   email?: string | null;
   fullName?: string;
@@ -14,5 +14,5 @@ export type CustomerUpdateInput = {
   notes?: string | null;
   phoneNumber?: string | null;
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany" | null;
-  subscriptions?: SubscriptionWhereUniqueInput | null;
+  subscriptions?: SubscriptionWhereUniqueInput;
 };

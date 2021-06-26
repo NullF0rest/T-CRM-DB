@@ -126,11 +126,9 @@ export class PackageResolverBase {
       data: {
         ...args.data,
 
-        company: args.data.company
-          ? {
-              connect: args.data.company,
-            }
-          : undefined,
+        company: {
+          connect: args.data.company,
+        },
       },
     });
   }
@@ -173,11 +171,9 @@ export class PackageResolverBase {
         data: {
           ...args.data,
 
-          company: args.data.company
-            ? {
-                connect: args.data.company,
-              }
-            : undefined,
+          company: {
+            connect: args.data.company,
+          },
         },
       });
     } catch (error) {

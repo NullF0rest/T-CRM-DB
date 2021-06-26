@@ -62,23 +62,17 @@ export class CustomerControllerBase {
       data: {
         ...data,
 
-        address: data.address
-          ? {
-              connect: data.address,
-            }
-          : undefined,
+        address: {
+          connect: data.address,
+        },
 
-        balanceAccount: data.balanceAccount
-          ? {
-              connect: data.balanceAccount,
-            }
-          : undefined,
+        balanceAccount: {
+          connect: data.balanceAccount,
+        },
 
-        subscriptions: data.subscriptions
-          ? {
-              connect: data.subscriptions,
-            }
-          : undefined,
+        subscriptions: {
+          connect: data.subscriptions,
+        },
       },
       select: {
         address: {
@@ -288,23 +282,17 @@ export class CustomerControllerBase {
         data: {
           ...data,
 
-          address: data.address
-            ? {
-                connect: data.address,
-              }
-            : undefined,
+          address: {
+            connect: data.address,
+          },
 
-          balanceAccount: data.balanceAccount
-            ? {
-                connect: data.balanceAccount,
-              }
-            : undefined,
+          balanceAccount: {
+            connect: data.balanceAccount,
+          },
 
-          subscriptions: data.subscriptions
-            ? {
-                connect: data.subscriptions,
-              }
-            : undefined,
+          subscriptions: {
+            connect: data.subscriptions,
+          },
         },
         select: {
           address: {
