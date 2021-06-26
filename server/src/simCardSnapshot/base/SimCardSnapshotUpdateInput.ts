@@ -17,7 +17,7 @@ class SimCardSnapshotUpdateInput {
   @Field(() => SimCardWhereUniqueInput, {
     nullable: true,
   })
-  simCardId?: SimCardWhereUniqueInput | null;
+  simCard?: SimCardWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

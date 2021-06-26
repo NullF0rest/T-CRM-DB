@@ -116,8 +116,8 @@ model Company {
 model SimCardSnapshot {
   createdAt       DateTime @default(now())
   id              String   @id @default(cuid())
-  simCardId       SimCard? @relation(fields: [simCardIdId], references: [id])
-  simCardIdId     String?
+  simCard         SimCard? @relation(fields: [simCardId], references: [id])
+  simCardId       String?
   simCardSnapshot Json
   updatedAt       DateTime @updatedAt
 }

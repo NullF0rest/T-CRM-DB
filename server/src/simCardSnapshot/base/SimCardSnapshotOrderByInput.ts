@@ -32,7 +32,7 @@ class SimCardSnapshotOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  simCardIdId?: SortOrder;
+  simCardId?: SortOrder;
 
   @ApiProperty({
     required: false,

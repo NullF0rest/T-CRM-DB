@@ -58,9 +58,9 @@ export class SimCardSnapshotControllerBase {
       data: {
         ...data,
 
-        simCardId: data.simCardId
+        simCard: data.simCard
           ? {
-              connect: data.simCardId,
+              connect: data.simCard,
             }
           : undefined,
       },
@@ -68,7 +68,7 @@ export class SimCardSnapshotControllerBase {
         createdAt: true,
         id: true,
 
-        simCardId: {
+        simCard: {
           select: {
             id: true,
           },
@@ -113,7 +113,7 @@ export class SimCardSnapshotControllerBase {
         createdAt: true,
         id: true,
 
-        simCardId: {
+        simCard: {
           select: {
             id: true,
           },
@@ -153,7 +153,7 @@ export class SimCardSnapshotControllerBase {
         createdAt: true,
         id: true,
 
-        simCardId: {
+        simCard: {
           select: {
             id: true,
           },
@@ -212,9 +212,9 @@ export class SimCardSnapshotControllerBase {
         data: {
           ...data,
 
-          simCardId: data.simCardId
+          simCard: data.simCard
             ? {
-                connect: data.simCardId,
+                connect: data.simCard,
               }
             : undefined,
         },
@@ -222,7 +222,7 @@ export class SimCardSnapshotControllerBase {
           createdAt: true,
           id: true,
 
-          simCardId: {
+          simCard: {
             select: {
               id: true,
             },
@@ -263,7 +263,7 @@ export class SimCardSnapshotControllerBase {
           createdAt: true,
           id: true,
 
-          simCardId: {
+          simCard: {
             select: {
               id: true,
             },

@@ -124,9 +124,9 @@ export class SimCardSnapshotResolverBase {
       data: {
         ...args.data,
 
-        simCardId: args.data.simCardId
+        simCard: args.data.simCard
           ? {
-              connect: args.data.simCardId,
+              connect: args.data.simCard,
             }
           : undefined,
       },
@@ -171,9 +171,9 @@ export class SimCardSnapshotResolverBase {
         data: {
           ...args.data,
 
-          simCardId: args.data.simCardId
+          simCard: args.data.simCard
             ? {
-                connect: args.data.simCardId,
+                connect: args.data.simCard,
               }
             : undefined,
         },
@@ -216,7 +216,7 @@ export class SimCardSnapshotResolverBase {
     action: "read",
     possession: "any",
   })
-  async simCardId(
+  async simCard(
     @graphql.Parent() parent: SimCardSnapshot,
     @gqlUserRoles.UserRoles() userRoles: string[]
   ): Promise<SimCard | null> {
@@ -226,7 +226,7 @@ export class SimCardSnapshotResolverBase {
       possession: "any",
       resource: "SimCard",
     });
-    const result = await this.service.getSimCardId(parent.id);
+    const result = await this.service.getSimCard(parent.id);
 
     if (!result) {
       return null;

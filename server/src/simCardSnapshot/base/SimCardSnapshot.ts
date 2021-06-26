@@ -36,7 +36,7 @@ class SimCardSnapshot {
   @ValidateNested()
   @Type(() => SimCard)
   @IsOptional()
-  simCardId?: SimCard | null;
+  simCard?: SimCard | null;
 
   @ApiProperty({
     required: true,

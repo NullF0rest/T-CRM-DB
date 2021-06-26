@@ -32,11 +32,12 @@ class BalanceAccount {
   createdAt!: Date;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => Customer,
   })
   @ValidateNested()
   @Type(() => Customer)
+  @IsOptional()
   customer?: Customer;
 
   @ApiProperty({
