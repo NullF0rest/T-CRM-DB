@@ -3,8 +3,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { AddressWhereUniqueInput } from "../../address/base/AddressWhereUniqueInput";
 import {
   ValidateNested,
-  IsDate,
   IsOptional,
+  IsDate,
   IsString,
   IsBoolean,
   IsEnum,
@@ -16,22 +16,28 @@ import { SubscriptionWhereUniqueInput } from "../../subscription/base/Subscripti
 @InputType()
 class CustomerCreateInput {
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => AddressWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => AddressWhereUniqueInput)
-  @Field(() => AddressWhereUniqueInput)
-  address!: AddressWhereUniqueInput;
+  @IsOptional()
+  @Field(() => AddressWhereUniqueInput, {
+    nullable: true,
+  })
+  address?: AddressWhereUniqueInput;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => BalanceAccountWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => BalanceAccountWhereUniqueInput)
-  @Field(() => BalanceAccountWhereUniqueInput)
-  balanceAccount!: BalanceAccountWhereUniqueInput;
+  @IsOptional()
+  @Field(() => BalanceAccountWhereUniqueInput, {
+    nullable: true,
+  })
+  balanceAccount?: BalanceAccountWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -127,12 +133,15 @@ class CustomerCreateInput {
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany" | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => SubscriptionWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => SubscriptionWhereUniqueInput)
-  @Field(() => SubscriptionWhereUniqueInput)
-  subscriptions!: SubscriptionWhereUniqueInput;
+  @IsOptional()
+  @Field(() => SubscriptionWhereUniqueInput, {
+    nullable: true,
+  })
+  subscriptions?: SubscriptionWhereUniqueInput | null;
 }
 export { CustomerCreateInput };

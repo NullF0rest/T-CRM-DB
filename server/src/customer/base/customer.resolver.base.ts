@@ -130,17 +130,23 @@ export class CustomerResolverBase {
       data: {
         ...args.data,
 
-        address: {
-          connect: args.data.address,
-        },
+        address: args.data.address
+          ? {
+              connect: args.data.address,
+            }
+          : undefined,
 
-        balanceAccount: {
-          connect: args.data.balanceAccount,
-        },
+        balanceAccount: args.data.balanceAccount
+          ? {
+              connect: args.data.balanceAccount,
+            }
+          : undefined,
 
-        subscriptions: {
-          connect: args.data.subscriptions,
-        },
+        subscriptions: args.data.subscriptions
+          ? {
+              connect: args.data.subscriptions,
+            }
+          : undefined,
       },
     });
   }
@@ -183,17 +189,23 @@ export class CustomerResolverBase {
         data: {
           ...args.data,
 
-          address: {
-            connect: args.data.address,
-          },
+          address: args.data.address
+            ? {
+                connect: args.data.address,
+              }
+            : undefined,
 
-          balanceAccount: {
-            connect: args.data.balanceAccount,
-          },
+          balanceAccount: args.data.balanceAccount
+            ? {
+                connect: args.data.balanceAccount,
+              }
+            : undefined,
 
-          subscriptions: {
-            connect: args.data.subscriptions,
-          },
+          subscriptions: args.data.subscriptions
+            ? {
+                connect: args.data.subscriptions,
+              }
+            : undefined,
         },
       });
     } catch (error) {
