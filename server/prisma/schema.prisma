@@ -20,8 +20,8 @@ model User {
 
 model Customer {
   address          Address
-  balanceAccount   BalanceAccount      @relation(fields: [balanceAccountId], references: [id])
-  balanceAccountId String
+  balanceAccount   BalanceAccount?     @relation(fields: [balanceAccountId], references: [id])
+  balanceAccountId String?
   createdAt        DateTime            @default(now())
   dateOfBirth      DateTime?
   email            String?
@@ -35,8 +35,8 @@ model Customer {
   simCards         SimCard[]
   snapshots        CustomerSnapshot[]
   status           EnumCustomerStatus?
-  subscriptions    Subscription        @relation(fields: [subscriptionsId], references: [id])
-  subscriptionsId  String
+  subscriptions    Subscription?       @relation(fields: [subscriptionsId], references: [id])
+  subscriptionsId  String?
   updatedAt        DateTime            @updatedAt
 }
 

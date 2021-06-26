@@ -37,7 +37,7 @@ class CustomerUpdateInput {
   @Field(() => BalanceAccountWhereUniqueInput, {
     nullable: true,
   })
-  balanceAccount?: BalanceAccountWhereUniqueInput;
+  balanceAccount?: BalanceAccountWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -148,6 +148,6 @@ class CustomerUpdateInput {
   @Field(() => SubscriptionWhereUniqueInput, {
     nullable: true,
   })
-  subscriptions?: SubscriptionWhereUniqueInput;
+  subscriptions?: SubscriptionWhereUniqueInput | null;
 }
 export { CustomerUpdateInput };
