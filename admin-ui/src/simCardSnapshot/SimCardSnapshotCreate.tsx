@@ -14,11 +14,7 @@ export const SimCardSnapshotCreate = (
   return (
     <Create {...props}>
       <SimpleForm>
-        <ReferenceInput
-          source="simcard.id"
-          reference="SimCard"
-          label="SimCardId"
-        >
+        <ReferenceInput source="simcard.id" reference="SimCard" label="SimCard">
           <SelectInput optionText={SimCardTitle} />
         </ReferenceInput>
         <div />

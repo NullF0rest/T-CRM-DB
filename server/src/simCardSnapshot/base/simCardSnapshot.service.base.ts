@@ -36,11 +36,11 @@ export class SimCardSnapshotServiceBase {
     return this.prisma.simCardSnapshot.delete(args);
   }
 
-  async getSimCardId(parentId: string): Promise<SimCard | null> {
+  async getSimCard(parentId: string): Promise<SimCard | null> {
     return this.prisma.simCardSnapshot
       .findUnique({
         where: { id: parentId },
       })
-      .simCardId();
+      .simCard();
   }
 }

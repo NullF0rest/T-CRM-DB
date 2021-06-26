@@ -126,9 +126,11 @@ export class BalanceAccountResolverBase {
       data: {
         ...args.data,
 
-        customer: {
-          connect: args.data.customer,
-        },
+        customer: args.data.customer
+          ? {
+              connect: args.data.customer,
+            }
+          : undefined,
       },
     });
   }
@@ -171,9 +173,11 @@ export class BalanceAccountResolverBase {
         data: {
           ...args.data,
 
-          customer: {
-            connect: args.data.customer,
-          },
+          customer: args.data.customer
+            ? {
+                connect: args.data.customer,
+              }
+            : undefined,
         },
       });
     } catch (error) {

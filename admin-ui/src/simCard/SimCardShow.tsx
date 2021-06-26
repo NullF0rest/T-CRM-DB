@@ -52,7 +52,7 @@ export const SimCardShow = (props: ShowProps): React.ReactElement => {
             <DateField source="createdAt" label="Created At" />
             <TextField label="ID" source="id" />
             <ReferenceField
-              label="SimCardId"
+              label="SimCard"
               source="simcard.id"
               reference="SimCard"
             >

@@ -17,12 +17,15 @@ class BalanceAccountCreateInput {
   balance?: number | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => CustomerWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => CustomerWhereUniqueInput)
-  @Field(() => CustomerWhereUniqueInput)
-  customer!: CustomerWhereUniqueInput;
+  @IsOptional()
+  @Field(() => CustomerWhereUniqueInput, {
+    nullable: true,
+  })
+  customer?: CustomerWhereUniqueInput;
 }
 export { BalanceAccountCreateInput };

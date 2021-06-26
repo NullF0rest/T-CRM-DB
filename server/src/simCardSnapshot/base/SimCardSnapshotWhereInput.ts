@@ -28,7 +28,7 @@ class SimCardSnapshotWhereInput {
   @Field(() => SimCardWhereUniqueInput, {
     nullable: true,
   })
-  simCardId?: SimCardWhereUniqueInput;
+  simCard?: SimCardWhereUniqueInput;
 
   @ApiProperty({
     required: false,

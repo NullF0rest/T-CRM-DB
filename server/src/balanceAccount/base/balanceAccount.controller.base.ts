@@ -60,9 +60,11 @@ export class BalanceAccountControllerBase {
       data: {
         ...data,
 
-        customer: {
-          connect: data.customer,
-        },
+        customer: data.customer
+          ? {
+              connect: data.customer,
+            }
+          : undefined,
       },
       select: {
         balance: true,
@@ -212,9 +214,11 @@ export class BalanceAccountControllerBase {
         data: {
           ...data,
 
-          customer: {
-            connect: data.customer,
-          },
+          customer: data.customer
+            ? {
+                connect: data.customer,
+              }
+            : undefined,
         },
         select: {
           balance: true,
