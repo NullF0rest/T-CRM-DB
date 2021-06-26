@@ -48,7 +48,7 @@ class AddressUpdateInput {
   @Field(() => CustomerWhereUniqueInput, {
     nullable: true,
   })
-  customer?: CustomerWhereUniqueInput | null;
+  customer?: CustomerWhereUniqueInput;
 
   @ApiProperty({
     required: false,

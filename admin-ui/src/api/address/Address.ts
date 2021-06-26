@@ -5,7 +5,7 @@ export type Address = {
   address_2: string | null;
   city: string | null;
   createdAt: Date;
-  customer?: Customer | null;
+  customer?: Customer;
   geolocation: string | null;
   governate: string | null;
   id: string;

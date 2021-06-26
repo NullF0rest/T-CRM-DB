@@ -60,11 +60,9 @@ export class PackageControllerBase {
       data: {
         ...data,
 
-        company: data.company
-          ? {
-              connect: data.company,
-            }
-          : undefined,
+        company: {
+          connect: data.company,
+        },
       },
       select: {
         company: {
@@ -217,11 +215,9 @@ export class PackageControllerBase {
         data: {
           ...data,
 
-          company: data.company
-            ? {
-                connect: data.company,
-              }
-            : undefined,
+          company: {
+            connect: data.company,
+          },
         },
         select: {
           company: {

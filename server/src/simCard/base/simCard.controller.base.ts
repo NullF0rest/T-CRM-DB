@@ -583,7 +583,7 @@ export class SimCardControllerBase {
         createdAt: true,
         id: true,
 
-        simCardId: {
+        simCard: {
           select: {
             id: true,
           },

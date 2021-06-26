@@ -4,6 +4,6 @@ import { JsonNullableFilter } from "../../util/JsonNullableFilter";
 
 export type SimCardSnapshotWhereInput = {
   id?: StringFilter;
-  simCardId?: SimCardWhereUniqueInput;
+  simCard?: SimCardWhereUniqueInput;
   simCardSnapshot?: JsonNullableFilter;
 };

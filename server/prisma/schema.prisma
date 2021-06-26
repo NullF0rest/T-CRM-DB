@@ -20,8 +20,8 @@ model User {
 
 model Customer {
   address          Address
-  balanceAccount   BalanceAccount?     @relation(fields: [balanceAccountId], references: [id])
-  balanceAccountId String?
+  balanceAccount   BalanceAccount      @relation(fields: [balanceAccountId], references: [id])
+  balanceAccountId String
   createdAt        DateTime            @default(now())
   dateOfBirth      DateTime?
   email            String?
@@ -35,8 +35,8 @@ model Customer {
   simCards         SimCard[]
   snapshots        CustomerSnapshot[]
   status           EnumCustomerStatus?
-  subscriptions    Subscription?       @relation(fields: [subscriptionsId], references: [id])
-  subscriptionsId  String?
+  subscriptions    Subscription        @relation(fields: [subscriptionsId], references: [id])
+  subscriptionsId  String
   updatedAt        DateTime            @updatedAt
 }
 
@@ -58,8 +58,8 @@ model SimCard {
 }
 
 model Package {
-  company     Company?  @relation(fields: [companyId], references: [id])
-  companyId   String?
+  company     Company   @relation(fields: [companyId], references: [id])
+  companyId   String
   createdAt   DateTime  @default(now())
   description String?
   id          String    @id @default(cuid())
@@ -82,13 +82,13 @@ model Address {
   address_1   String?
   address_2   String?
   city        String?
-  createdAt   DateTime  @default(now())
-  customer    Customer? @relation(fields: [customerId], references: [id])
-  customerId  String?
+  createdAt   DateTime @default(now())
+  customer    Customer @relation(fields: [customerId], references: [id])
+  customerId  String
   geolocation String?
   governate   String?
-  id          String    @id @default(cuid())
-  updatedAt   DateTime  @updatedAt
+  id          String   @id @default(cuid())
+  updatedAt   DateTime @updatedAt
   zipcode     String?
 }
 
@@ -116,8 +116,8 @@ model Company {
 model SimCardSnapshot {
   createdAt       DateTime @default(now())
   id              String   @id @default(cuid())
-  simCardId       SimCard? @relation(fields: [simCardIdId], references: [id])
-  simCardIdId     String?
+  simCard         SimCard? @relation(fields: [simCardId], references: [id])
+  simCardId       String?
   simCardSnapshot Json
   updatedAt       DateTime @updatedAt
 }

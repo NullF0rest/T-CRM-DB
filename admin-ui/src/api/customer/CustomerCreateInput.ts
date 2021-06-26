@@ -3,8 +3,8 @@ import { BalanceAccountWhereUniqueInput } from "../balanceAccount/BalanceAccount
 import { SubscriptionWhereUniqueInput } from "../subscription/SubscriptionWhereUniqueInput";
 
 export type CustomerCreateInput = {
-  address?: AddressWhereUniqueInput;
-  balanceAccount?: BalanceAccountWhereUniqueInput | null;
+  address: AddressWhereUniqueInput;
+  balanceAccount: BalanceAccountWhereUniqueInput;
   dateOfBirth?: Date | null;
   email?: string | null;
   fullName: string;
@@ -14,5 +14,5 @@ export type CustomerCreateInput = {
   notes?: string | null;
   phoneNumber?: string | null;
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany" | null;
-  subscriptions?: SubscriptionWhereUniqueInput | null;
+  subscriptions: SubscriptionWhereUniqueInput;
 };

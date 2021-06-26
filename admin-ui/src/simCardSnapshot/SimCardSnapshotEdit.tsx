@@ -12,11 +12,7 @@ export const SimCardSnapshotEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <ReferenceInput
-          source="simcard.id"
-          reference="SimCard"
-          label="SimCardId"
-        >
+        <ReferenceInput source="simcard.id" reference="SimCard" label="SimCard">
           <SelectInput optionText={SimCardTitle} />
         </ReferenceInput>
         <div />

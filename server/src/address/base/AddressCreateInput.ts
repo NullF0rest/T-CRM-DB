@@ -39,16 +39,13 @@ class AddressCreateInput {
   city?: string | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => CustomerWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => CustomerWhereUniqueInput)
-  @IsOptional()
-  @Field(() => CustomerWhereUniqueInput, {
-    nullable: true,
-  })
-  customer?: CustomerWhereUniqueInput | null;
+  @Field(() => CustomerWhereUniqueInput)
+  customer!: CustomerWhereUniqueInput;
 
   @ApiProperty({
     required: false,

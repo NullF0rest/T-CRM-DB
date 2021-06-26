@@ -3,9 +3,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Company } from "../../company/base/Company";
 import {
   ValidateNested,
-  IsOptional,
   IsDate,
   IsString,
+  IsOptional,
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
@@ -13,13 +13,12 @@ import { SimCard } from "../../simCard/base/SimCard";
 @ObjectType()
 class Package {
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => Company,
   })
   @ValidateNested()
   @Type(() => Company)
-  @IsOptional()
-  company?: Company | null;
+  company?: Company;
 
   @ApiProperty({
     required: true,

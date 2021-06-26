@@ -48,7 +48,7 @@ class BalanceAccount {
   id!: string;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => [Transaction],
   })
   @ValidateNested()

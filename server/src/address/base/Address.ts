@@ -47,13 +47,12 @@ class Address {
   createdAt!: Date;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => Customer,
   })
   @ValidateNested()
   @Type(() => Customer)
-  @IsOptional()
-  customer?: Customer | null;
+  customer?: Customer;
 
   @ApiProperty({
     required: false,
