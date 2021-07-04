@@ -2,26 +2,26 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsNumber,
-  IsOptional,
   IsDate,
   ValidateNested,
+  IsOptional,
   IsString,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Customer } from "../../customer/base/Customer";
+import { Invoice } from "../../invoice/base/Invoice";
+import { PaymentLedger } from "../../paymentLedger/base/PaymentLedger";
+import { Subscription } from "../../subscription/base/Subscription";
 import { Transaction } from "../../transaction/base/Transaction";
 @ObjectType()
 class BalanceAccount {
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsNumber()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  balance!: number | null;
+  @Field(() => Number)
+  balance!: number;
 
   @ApiProperty({
     required: true,
@@ -32,11 +32,12 @@ class BalanceAccount {
   createdAt!: Date;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => Customer,
   })
   @ValidateNested()
   @Type(() => Customer)
+  @IsOptional()
   customer?: Customer;
 
   @ApiProperty({
@@ -48,7 +49,34 @@ class BalanceAccount {
   id!: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
+    type: () => [Invoice],
+  })
+  @ValidateNested()
+  @Type(() => Invoice)
+  @IsOptional()
+  invoices?: Array<Invoice>;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentLedger,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedger)
+  @IsOptional()
+  paymentLedger?: PaymentLedger | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Subscription,
+  })
+  @ValidateNested()
+  @Type(() => Subscription)
+  @IsOptional()
+  subscription?: Subscription | null;
+
+  @ApiProperty({
+    required: false,
     type: () => [Transaction],
   })
   @ValidateNested()

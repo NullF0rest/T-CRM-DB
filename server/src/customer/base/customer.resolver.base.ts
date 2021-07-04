@@ -20,6 +20,7 @@ import { CustomerSnapshotFindManyArgs } from "../../customerSnapshot/base/Custom
 import { CustomerSnapshot } from "../../customerSnapshot/base/CustomerSnapshot";
 import { Address } from "../../address/base/Address";
 import { BalanceAccount } from "../../balanceAccount/base/BalanceAccount";
+import { PaymentLedger } from "../../paymentLedger/base/PaymentLedger";
 import { Subscription } from "../../subscription/base/Subscription";
 import { CustomerService } from "../customer.service";
 
@@ -136,17 +137,19 @@ export class CustomerResolverBase {
             }
           : undefined,
 
-        balanceAccount: args.data.balanceAccount
+        balanceAccount: {
+          connect: args.data.balanceAccount,
+        },
+
+        paymentLedgers: args.data.paymentLedgers
           ? {
-              connect: args.data.balanceAccount,
+              connect: args.data.paymentLedgers,
             }
           : undefined,
 
-        subscriptions: args.data.subscriptions
-          ? {
-              connect: args.data.subscriptions,
-            }
-          : undefined,
+        subscriptions: {
+          connect: args.data.subscriptions,
+        },
       },
     });
   }
@@ -195,17 +198,19 @@ export class CustomerResolverBase {
               }
             : undefined,
 
-          balanceAccount: args.data.balanceAccount
+          balanceAccount: {
+            connect: args.data.balanceAccount,
+          },
+
+          paymentLedgers: args.data.paymentLedgers
             ? {
-                connect: args.data.balanceAccount,
+                connect: args.data.paymentLedgers,
               }
             : undefined,
 
-          subscriptions: args.data.subscriptions
-            ? {
-                connect: args.data.subscriptions,
-              }
-            : undefined,
+          subscriptions: {
+            connect: args.data.subscriptions,
+          },
         },
       });
     } catch (error) {
@@ -333,6 +338,30 @@ export class CustomerResolverBase {
       resource: "BalanceAccount",
     });
     const result = await this.service.getBalanceAccount(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
+  }
+
+  @graphql.ResolveField(() => PaymentLedger, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Customer",
+    action: "read",
+    possession: "any",
+  })
+  async paymentLedgers(
+    @graphql.Parent() parent: Customer,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<PaymentLedger | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "PaymentLedger",
+    });
+    const result = await this.service.getPaymentLedgers(parent.id);
 
     if (!result) {
       return null;

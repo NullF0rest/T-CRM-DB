@@ -15,6 +15,8 @@ import { BalanceAccountWhereUniqueInput } from "./BalanceAccountWhereUniqueInput
 import { BalanceAccountFindManyArgs } from "./BalanceAccountFindManyArgs";
 import { BalanceAccountUpdateInput } from "./BalanceAccountUpdateInput";
 import { BalanceAccount } from "./BalanceAccount";
+import { InvoiceWhereInput } from "../../invoice/base/InvoiceWhereInput";
+import { Invoice } from "../../invoice/base/Invoice";
 import { TransactionWhereInput } from "../../transaction/base/TransactionWhereInput";
 import { Transaction } from "../../transaction/base/Transaction";
 
@@ -60,9 +62,23 @@ export class BalanceAccountControllerBase {
       data: {
         ...data,
 
-        customer: {
-          connect: data.customer,
-        },
+        customer: data.customer
+          ? {
+              connect: data.customer,
+            }
+          : undefined,
+
+        paymentLedger: data.paymentLedger
+          ? {
+              connect: data.paymentLedger,
+            }
+          : undefined,
+
+        subscription: data.subscription
+          ? {
+              connect: data.subscription,
+            }
+          : undefined,
       },
       select: {
         balance: true,
@@ -75,6 +91,19 @@ export class BalanceAccountControllerBase {
         },
 
         id: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
+        subscription: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -120,6 +149,19 @@ export class BalanceAccountControllerBase {
         },
 
         id: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
+        subscription: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -160,6 +202,19 @@ export class BalanceAccountControllerBase {
         },
 
         id: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
+        subscription: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -212,9 +267,23 @@ export class BalanceAccountControllerBase {
         data: {
           ...data,
 
-          customer: {
-            connect: data.customer,
-          },
+          customer: data.customer
+            ? {
+                connect: data.customer,
+              }
+            : undefined,
+
+          paymentLedger: data.paymentLedger
+            ? {
+                connect: data.paymentLedger,
+              }
+            : undefined,
+
+          subscription: data.subscription
+            ? {
+                connect: data.subscription,
+              }
+            : undefined,
         },
         select: {
           balance: true,
@@ -227,6 +296,19 @@ export class BalanceAccountControllerBase {
           },
 
           id: true,
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
+          subscription: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -268,6 +350,19 @@ export class BalanceAccountControllerBase {
           },
 
           id: true,
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
+          subscription: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -279,6 +374,193 @@ export class BalanceAccountControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Get("/:id/invoices")
+  @nestAccessControl.UseRoles({
+    resource: "BalanceAccount",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiQuery({
+    type: () => InvoiceWhereInput,
+    style: "deepObject",
+    explode: true,
+  })
+  async findManyInvoices(
+    @common.Req() request: Request,
+    @common.Param() params: BalanceAccountWhereUniqueInput,
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<Invoice[]> {
+    const query: InvoiceWhereInput = request.query;
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Invoice",
+    });
+    const results = await this.service.findInvoices(params.id, {
+      where: query,
+      select: {
+        balanceAccount: {
+          select: {
+            id: true,
+          },
+        },
+
+        createdAt: true,
+        id: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
+        subscriptions: {
+          select: {
+            id: true,
+          },
+        },
+
+        transaction: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+      },
+    });
+    return results.map((result) => permission.filter(result));
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Post("/:id/invoices")
+  @nestAccessControl.UseRoles({
+    resource: "BalanceAccount",
+    action: "update",
+    possession: "any",
+  })
+  async createInvoices(
+    @common.Param() params: BalanceAccountWhereUniqueInput,
+    @common.Body() body: BalanceAccountWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      invoices: {
+        connect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "BalanceAccount",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"BalanceAccount"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Patch("/:id/invoices")
+  @nestAccessControl.UseRoles({
+    resource: "BalanceAccount",
+    action: "update",
+    possession: "any",
+  })
+  async updateInvoices(
+    @common.Param() params: BalanceAccountWhereUniqueInput,
+    @common.Body() body: BalanceAccountWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      invoices: {
+        set: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "BalanceAccount",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"BalanceAccount"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Delete("/:id/invoices")
+  @nestAccessControl.UseRoles({
+    resource: "BalanceAccount",
+    action: "update",
+    possession: "any",
+  })
+  async deleteInvoices(
+    @common.Param() params: BalanceAccountWhereUniqueInput,
+    @common.Body() body: BalanceAccountWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      invoices: {
+        disconnect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "BalanceAccount",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"BalanceAccount"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 
   @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
@@ -319,9 +601,23 @@ export class BalanceAccountControllerBase {
 
         createdAt: true,
         id: true,
+
+        invoices: {
+          select: {
+            id: true,
+          },
+        },
+
         method: true,
         name: true,
         notes: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         Time: true,
         type: true,
         updatedAt: true,

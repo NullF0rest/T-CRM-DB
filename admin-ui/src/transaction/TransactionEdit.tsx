@@ -12,6 +12,8 @@ import {
 } from "react-admin";
 
 import { BalanceAccountTitle } from "../balanceAccount/BalanceAccountTitle";
+import { InvoiceTitle } from "../invoice/InvoiceTitle";
+import { PaymentLedgerTitle } from "../paymentLedger/PaymentLedgerTitle";
 
 export const TransactionEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -25,9 +27,23 @@ export const TransactionEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectInput optionText={BalanceAccountTitle} />
         </ReferenceInput>
+        <ReferenceInput
+          source="invoice.id"
+          reference="Invoice"
+          label="Invoices"
+        >
+          <SelectInput optionText={InvoiceTitle} />
+        </ReferenceInput>
         <TextInput label="Method" source="method" />
         <TextInput label="Name" source="name" />
         <TextInput label="Notes" multiline source="notes" />
+        <ReferenceInput
+          source="paymentledger.id"
+          reference="PaymentLedger"
+          label="PaymentLedger"
+        >
+          <SelectInput optionText={PaymentLedgerTitle} />
+        </ReferenceInput>
         <DateTimeInput label="Time" source="Time" />
         <SelectInput
           source="type"

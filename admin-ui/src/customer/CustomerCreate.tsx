@@ -13,6 +13,7 @@ import {
 
 import { AddressTitle } from "../address/AddressTitle";
 import { BalanceAccountTitle } from "../balanceAccount/BalanceAccountTitle";
+import { PaymentLedgerTitle } from "../paymentLedger/PaymentLedgerTitle";
 import { SubscriptionTitle } from "../subscription/SubscriptionTitle";
 
 export const CustomerCreate = (props: CreateProps): React.ReactElement => {
@@ -36,6 +37,13 @@ export const CustomerCreate = (props: CreateProps): React.ReactElement => {
         <BooleanInput label="Is Deleted" source="isDeleted" />
         <TextInput label="National ID" source="nationalId" />
         <TextInput label="Notes" multiline source="notes" />
+        <ReferenceInput
+          source="paymentledger.id"
+          reference="PaymentLedger"
+          label="PaymentLedgers"
+        >
+          <SelectInput optionText={PaymentLedgerTitle} />
+        </ReferenceInput>
         <TextInput label="Phone Number" source="phoneNumber" />
         <SelectInput
           source="status"

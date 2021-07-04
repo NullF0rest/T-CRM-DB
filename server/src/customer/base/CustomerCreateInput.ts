@@ -11,6 +11,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { BalanceAccountWhereUniqueInput } from "../../balanceAccount/base/BalanceAccountWhereUniqueInput";
+import { PaymentLedgerWhereUniqueInput } from "../../paymentLedger/base/PaymentLedgerWhereUniqueInput";
 import { EnumCustomerStatus } from "./EnumCustomerStatus";
 import { SubscriptionWhereUniqueInput } from "../../subscription/base/SubscriptionWhereUniqueInput";
 @InputType()
@@ -28,16 +29,13 @@ class CustomerCreateInput {
   address?: AddressWhereUniqueInput;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => BalanceAccountWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => BalanceAccountWhereUniqueInput)
-  @IsOptional()
-  @Field(() => BalanceAccountWhereUniqueInput, {
-    nullable: true,
-  })
-  balanceAccount?: BalanceAccountWhereUniqueInput | null;
+  @Field(() => BalanceAccountWhereUniqueInput)
+  balanceAccount!: BalanceAccountWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -112,6 +110,18 @@ class CustomerCreateInput {
 
   @ApiProperty({
     required: false,
+    type: () => PaymentLedgerWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedgerWhereUniqueInput)
+  @IsOptional()
+  @Field(() => PaymentLedgerWhereUniqueInput, {
+    nullable: true,
+  })
+  paymentLedgers?: PaymentLedgerWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -133,15 +143,12 @@ class CustomerCreateInput {
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany" | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => SubscriptionWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => SubscriptionWhereUniqueInput)
-  @IsOptional()
-  @Field(() => SubscriptionWhereUniqueInput, {
-    nullable: true,
-  })
-  subscriptions?: SubscriptionWhereUniqueInput | null;
+  @Field(() => SubscriptionWhereUniqueInput)
+  subscriptions!: SubscriptionWhereUniqueInput;
 }
 export { CustomerCreateInput };

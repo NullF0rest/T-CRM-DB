@@ -10,6 +10,8 @@ import {
 } from "class-validator";
 import { BalanceAccountWhereUniqueInput } from "../../balanceAccount/base/BalanceAccountWhereUniqueInput";
 import { Type } from "class-transformer";
+import { InvoiceWhereUniqueInput } from "../../invoice/base/InvoiceWhereUniqueInput";
+import { PaymentLedgerWhereUniqueInput } from "../../paymentLedger/base/PaymentLedgerWhereUniqueInput";
 import { EnumTransactionType } from "./EnumTransactionType";
 @InputType()
 class TransactionUpdateInput {
@@ -34,7 +36,19 @@ class TransactionUpdateInput {
   @Field(() => BalanceAccountWhereUniqueInput, {
     nullable: true,
   })
-  balanceAccount?: BalanceAccountWhereUniqueInput | null;
+  balanceAccount?: BalanceAccountWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => InvoiceWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => InvoiceWhereUniqueInput)
+  @IsOptional()
+  @Field(() => InvoiceWhereUniqueInput, {
+    nullable: true,
+  })
+  invoices?: InvoiceWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -68,6 +82,18 @@ class TransactionUpdateInput {
     nullable: true,
   })
   notes?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentLedgerWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedgerWhereUniqueInput)
+  @IsOptional()
+  @Field(() => PaymentLedgerWhereUniqueInput, {
+    nullable: true,
+  })
+  paymentLedger?: PaymentLedgerWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

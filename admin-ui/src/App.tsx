@@ -54,6 +54,18 @@ import { BalanceAccountList } from "./balanceAccount/BalanceAccountList";
 import { BalanceAccountCreate } from "./balanceAccount/BalanceAccountCreate";
 import { BalanceAccountEdit } from "./balanceAccount/BalanceAccountEdit";
 import { BalanceAccountShow } from "./balanceAccount/BalanceAccountShow";
+import { PaymentLedgerList } from "./paymentLedger/PaymentLedgerList";
+import { PaymentLedgerCreate } from "./paymentLedger/PaymentLedgerCreate";
+import { PaymentLedgerEdit } from "./paymentLedger/PaymentLedgerEdit";
+import { PaymentLedgerShow } from "./paymentLedger/PaymentLedgerShow";
+import { PaymentOptionList } from "./paymentOption/PaymentOptionList";
+import { PaymentOptionCreate } from "./paymentOption/PaymentOptionCreate";
+import { PaymentOptionEdit } from "./paymentOption/PaymentOptionEdit";
+import { PaymentOptionShow } from "./paymentOption/PaymentOptionShow";
+import { InvoiceList } from "./invoice/InvoiceList";
+import { InvoiceCreate } from "./invoice/InvoiceCreate";
+import { InvoiceEdit } from "./invoice/InvoiceEdit";
+import { InvoiceShow } from "./invoice/InvoiceShow";
 
 const App = (): React.ReactElement => {
   const [dataProvider, setDataProvider] = useState<DataProvider | null>(null);
@@ -72,7 +84,7 @@ const App = (): React.ReactElement => {
   return (
     <div className="App">
       <Admin
-        title={"My app"}
+        title={"TeleCRM"}
         dataProvider={dataProvider}
         authProvider={basicHttpAuthProvider}
         theme={theme}
@@ -162,6 +174,27 @@ const App = (): React.ReactElement => {
           edit={BalanceAccountEdit}
           create={BalanceAccountCreate}
           show={BalanceAccountShow}
+        />
+        <Resource
+          name="PaymentLedger"
+          list={PaymentLedgerList}
+          edit={PaymentLedgerEdit}
+          create={PaymentLedgerCreate}
+          show={PaymentLedgerShow}
+        />
+        <Resource
+          name="PaymentOption"
+          list={PaymentOptionList}
+          edit={PaymentOptionEdit}
+          create={PaymentOptionCreate}
+          show={PaymentOptionShow}
+        />
+        <Resource
+          name="Invoice"
+          list={InvoiceList}
+          edit={InvoiceEdit}
+          create={InvoiceCreate}
+          show={InvoiceShow}
         />
       </Admin>
     </div>

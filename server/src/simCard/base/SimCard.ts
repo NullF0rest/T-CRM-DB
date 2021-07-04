@@ -30,13 +30,12 @@ class SimCard {
   addonPackages?: Array<AddonPackage>;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => Company,
   })
   @ValidateNested()
   @Type(() => Company)
-  @IsOptional()
-  company?: Company | null;
+  company?: Company;
 
   @ApiProperty({
     required: false,
@@ -58,12 +57,13 @@ class SimCard {
   createdAt!: Date;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => Customer,
   })
   @ValidateNested()
   @Type(() => Customer)
-  customer?: Customer;
+  @IsOptional()
+  customer?: Customer | null;
 
   @ApiProperty({
     required: true,

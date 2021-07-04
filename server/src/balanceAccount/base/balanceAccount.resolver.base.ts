@@ -14,9 +14,13 @@ import { DeleteBalanceAccountArgs } from "./DeleteBalanceAccountArgs";
 import { BalanceAccountFindManyArgs } from "./BalanceAccountFindManyArgs";
 import { BalanceAccountFindUniqueArgs } from "./BalanceAccountFindUniqueArgs";
 import { BalanceAccount } from "./BalanceAccount";
+import { InvoiceFindManyArgs } from "../../invoice/base/InvoiceFindManyArgs";
+import { Invoice } from "../../invoice/base/Invoice";
 import { TransactionFindManyArgs } from "../../transaction/base/TransactionFindManyArgs";
 import { Transaction } from "../../transaction/base/Transaction";
 import { Customer } from "../../customer/base/Customer";
+import { PaymentLedger } from "../../paymentLedger/base/PaymentLedger";
+import { Subscription } from "../../subscription/base/Subscription";
 import { BalanceAccountService } from "../balanceAccount.service";
 
 @graphql.Resolver(() => BalanceAccount)
@@ -126,9 +130,23 @@ export class BalanceAccountResolverBase {
       data: {
         ...args.data,
 
-        customer: {
-          connect: args.data.customer,
-        },
+        customer: args.data.customer
+          ? {
+              connect: args.data.customer,
+            }
+          : undefined,
+
+        paymentLedger: args.data.paymentLedger
+          ? {
+              connect: args.data.paymentLedger,
+            }
+          : undefined,
+
+        subscription: args.data.subscription
+          ? {
+              connect: args.data.subscription,
+            }
+          : undefined,
       },
     });
   }
@@ -171,9 +189,23 @@ export class BalanceAccountResolverBase {
         data: {
           ...args.data,
 
-          customer: {
-            connect: args.data.customer,
-          },
+          customer: args.data.customer
+            ? {
+                connect: args.data.customer,
+              }
+            : undefined,
+
+          paymentLedger: args.data.paymentLedger
+            ? {
+                connect: args.data.paymentLedger,
+              }
+            : undefined,
+
+          subscription: args.data.subscription
+            ? {
+                connect: args.data.subscription,
+              }
+            : undefined,
         },
       });
     } catch (error) {
@@ -206,6 +238,32 @@ export class BalanceAccountResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Invoice])
+  @nestAccessControl.UseRoles({
+    resource: "BalanceAccount",
+    action: "read",
+    possession: "any",
+  })
+  async invoices(
+    @graphql.Parent() parent: BalanceAccount,
+    @graphql.Args() args: InvoiceFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Invoice[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Invoice",
+    });
+    const results = await this.service.findInvoices(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 
   @graphql.ResolveField(() => [Transaction])
@@ -251,6 +309,54 @@ export class BalanceAccountResolverBase {
       resource: "Customer",
     });
     const result = await this.service.getCustomer(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
+  }
+
+  @graphql.ResolveField(() => PaymentLedger, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "BalanceAccount",
+    action: "read",
+    possession: "any",
+  })
+  async paymentLedger(
+    @graphql.Parent() parent: BalanceAccount,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<PaymentLedger | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "PaymentLedger",
+    });
+    const result = await this.service.getPaymentLedger(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
+  }
+
+  @graphql.ResolveField(() => Subscription, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "BalanceAccount",
+    action: "read",
+    possession: "any",
+  })
+  async subscription(
+    @graphql.Parent() parent: BalanceAccount,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Subscription | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Subscription",
+    });
+    const result = await this.service.getSubscription(parent.id);
 
     if (!result) {
       return null;
