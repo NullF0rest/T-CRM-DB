@@ -63,6 +63,18 @@ export class SubscriptionControllerBase {
               connect: data.customer,
             }
           : undefined,
+
+        invoice: data.invoice
+          ? {
+              connect: data.invoice,
+            }
+          : undefined,
+
+        paymentLedger: data.paymentLedger
+          ? {
+              connect: data.paymentLedger,
+            }
+          : undefined,
       },
       select: {
         createdAt: true,
@@ -74,6 +86,19 @@ export class SubscriptionControllerBase {
         },
 
         id: true,
+
+        invoice: {
+          select: {
+            id: true,
+          },
+        },
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -118,6 +143,19 @@ export class SubscriptionControllerBase {
         },
 
         id: true,
+
+        invoice: {
+          select: {
+            id: true,
+          },
+        },
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -157,6 +195,19 @@ export class SubscriptionControllerBase {
         },
 
         id: true,
+
+        invoice: {
+          select: {
+            id: true,
+          },
+        },
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -214,6 +265,18 @@ export class SubscriptionControllerBase {
                 connect: data.customer,
               }
             : undefined,
+
+          invoice: data.invoice
+            ? {
+                connect: data.invoice,
+              }
+            : undefined,
+
+          paymentLedger: data.paymentLedger
+            ? {
+                connect: data.paymentLedger,
+              }
+            : undefined,
         },
         select: {
           createdAt: true,
@@ -225,6 +288,19 @@ export class SubscriptionControllerBase {
           },
 
           id: true,
+
+          invoice: {
+            select: {
+              id: true,
+            },
+          },
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -265,6 +341,19 @@ export class SubscriptionControllerBase {
           },
 
           id: true,
+
+          invoice: {
+            select: {
+              id: true,
+            },
+          },
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });

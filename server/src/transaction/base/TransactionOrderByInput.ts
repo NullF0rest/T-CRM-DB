@@ -50,6 +50,15 @@ class TransactionOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  invoicesId?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["Asc", "Desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   method?: SortOrder;
 
   @ApiProperty({
@@ -69,6 +78,15 @@ class TransactionOrderByInput {
     nullable: true,
   })
   notes?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["Asc", "Desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  paymentLedgerId?: SortOrder;
 
   @ApiProperty({
     required: false,

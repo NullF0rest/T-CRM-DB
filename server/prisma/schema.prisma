@@ -20,8 +20,8 @@ model User {
 
 model Customer {
   address          Address
-  balanceAccount   BalanceAccount?     @relation(fields: [balanceAccountId], references: [id])
-  balanceAccountId String?
+  balanceAccount   BalanceAccount      @relation(fields: [balanceAccountId], references: [id])
+  balanceAccountId String
   createdAt        DateTime            @default(now())
   dateOfBirth      DateTime?
   email            String?
@@ -31,24 +31,26 @@ model Customer {
   isDeleted        Boolean?
   nationalId       String?
   notes            String?
+  paymentLedgers   PaymentLedger?      @relation(fields: [paymentLedgersId], references: [id])
+  paymentLedgersId String?
   phoneNumber      String?
   simCards         SimCard[]
   snapshots        CustomerSnapshot[]
   status           EnumCustomerStatus?
-  subscriptions    Subscription?       @relation(fields: [subscriptionsId], references: [id])
-  subscriptionsId  String?
+  subscriptions    Subscription        @relation(fields: [subscriptionsId], references: [id])
+  subscriptionsId  String
   updatedAt        DateTime            @updatedAt
 }
 
 model SimCard {
   activationDay DateTime?
   addonPackages AddonPackage[]
-  company       Company?          @relation(fields: [companyId], references: [id])
-  companyId     String?
+  company       Company           @relation(fields: [companyId], references: [id])
+  companyId     String
   c_id          String?
   createdAt     DateTime          @default(now())
-  customer      Customer          @relation(fields: [customerId], references: [id])
-  customerId    String
+  customer      Customer?         @relation(fields: [customerId], references: [id])
+  customerId    String?
   id            String            @id @default(cuid())
   number        String
   package       Package?          @relation(fields: [packageId], references: [id])
@@ -123,33 +125,76 @@ model SimCardSnapshot {
 }
 
 model Subscription {
-  createdAt DateTime @default(now())
-  customer  Customer
-  id        String   @id @default(cuid())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime       @default(now())
+  customer        Customer
+  id              String         @id @default(cuid())
+  invoice         Invoice?       @relation(fields: [invoiceId], references: [id])
+  invoiceId       String?
+  paymentLedger   PaymentLedger? @relation(fields: [paymentLedgerId], references: [id])
+  paymentLedgerId String?
+  updatedAt       DateTime       @updatedAt
 }
 
 model Transaction {
   amount           Float?
-  balanceAccount   BalanceAccount?      @relation(fields: [balanceAccountId], references: [id])
-  balanceAccountId String?
+  balanceAccount   BalanceAccount       @relation(fields: [balanceAccountId], references: [id])
+  balanceAccountId String
   createdAt        DateTime             @default(now())
   id               String               @id @default(cuid())
+  invoices         Invoice?             @relation(fields: [invoicesId], references: [id])
+  invoicesId       String?
   method           String?
   name             String?
   notes            String?
+  paymentLedger    PaymentLedger?       @relation(fields: [paymentLedgerId], references: [id])
+  paymentLedgerId  String?
   Time             DateTime
   type             EnumTransactionType?
   updatedAt        DateTime             @updatedAt
 }
 
 model BalanceAccount {
-  balance      Float?
-  createdAt    DateTime      @default(now())
-  customer     Customer
-  id           String        @id @default(cuid())
-  transactions Transaction[]
-  updatedAt    DateTime      @updatedAt
+  balance         Float
+  createdAt       DateTime       @default(now())
+  customer        Customer
+  id              String         @id @default(cuid())
+  invoices        Invoice[]
+  paymentLedger   PaymentLedger? @relation(fields: [paymentLedgerId], references: [id])
+  paymentLedgerId String?
+  transactions    Transaction[]
+  updatedAt       DateTime       @updatedAt
+}
+
+model PaymentLedger {
+  balanceAccounts BalanceAccount
+  createdAt       DateTime        @default(now())
+  customer        Customer
+  id              String          @id @default(cuid())
+  invoices        Invoice[]
+  paymentOptions  PaymentOption[]
+  subscriptions   Subscription[]
+  transactions    Transaction[]
+  updatedAt       DateTime        @updatedAt
+}
+
+model PaymentOption {
+  cardNumber    Int?
+  createdAt     DateTime        @default(now())
+  id            String          @id @default(cuid())
+  paymentLedger PaymentLedger[]
+  updatedAt     DateTime        @updatedAt
+}
+
+model Invoice {
+  balanceAccount   BalanceAccount? @relation(fields: [balanceAccountId], references: [id])
+  balanceAccountId String?
+  createdAt        DateTime        @default(now())
+  id               String          @id @default(cuid())
+  paymentLedger    PaymentLedger?  @relation(fields: [paymentLedgerId], references: [id])
+  paymentLedgerId  String?
+  subscriptions    Subscription
+  transaction      Transaction
+  updatedAt        DateTime        @updatedAt
 }
 
 enum EnumCustomerStatus {

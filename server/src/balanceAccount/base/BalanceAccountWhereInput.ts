@@ -1,22 +1,23 @@
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { FloatNullableFilter } from "../../util/FloatNullableFilter";
+import { FloatFilter } from "../../util/FloatFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
+import { PaymentLedgerWhereUniqueInput } from "../../paymentLedger/base/PaymentLedgerWhereUniqueInput";
 @InputType()
 class BalanceAccountWhereInput {
   @ApiProperty({
     required: false,
-    type: FloatNullableFilter,
+    type: FloatFilter,
   })
-  @Type(() => FloatNullableFilter)
+  @Type(() => FloatFilter)
   @IsOptional()
-  @Field(() => FloatNullableFilter, {
+  @Field(() => FloatFilter, {
     nullable: true,
   })
-  balance?: FloatNullableFilter;
+  balance?: FloatFilter;
 
   @ApiProperty({
     required: false,
@@ -40,5 +41,17 @@ class BalanceAccountWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentLedgerWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedgerWhereUniqueInput)
+  @IsOptional()
+  @Field(() => PaymentLedgerWhereUniqueInput, {
+    nullable: true,
+  })
+  paymentLedger?: PaymentLedgerWhereUniqueInput;
 }
 export { BalanceAccountWhereInput };

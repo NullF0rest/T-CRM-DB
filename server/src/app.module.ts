@@ -11,6 +11,9 @@ import { SimCardSnapshotModule } from "./simCardSnapshot/simCardSnapshot.module"
 import { SubscriptionModule } from "./subscription/subscription.module";
 import { TransactionModule } from "./transaction/transaction.module";
 import { BalanceAccountModule } from "./balanceAccount/balanceAccount.module";
+import { PaymentLedgerModule } from "./paymentLedger/paymentLedger.module";
+import { PaymentOptionModule } from "./paymentOption/paymentOption.module";
+import { InvoiceModule } from "./invoice/invoice.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { MorganModule } from "nest-morgan";
@@ -34,6 +37,9 @@ import { GraphQLModule } from "@nestjs/graphql";
     SubscriptionModule,
     TransactionModule,
     BalanceAccountModule,
+    PaymentLedgerModule,
+    PaymentOptionModule,
+    InvoiceModule,
     ACLModule,
     AuthModule,
     MorganModule,

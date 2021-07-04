@@ -28,7 +28,7 @@ class SimCardUpdateInput {
   @Field(() => CompanyWhereUniqueInput, {
     nullable: true,
   })
-  company?: CompanyWhereUniqueInput | null;
+  company?: CompanyWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -51,7 +51,7 @@ class SimCardUpdateInput {
   @Field(() => CustomerWhereUniqueInput, {
     nullable: true,
   })
-  customer?: CustomerWhereUniqueInput;
+  customer?: CustomerWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

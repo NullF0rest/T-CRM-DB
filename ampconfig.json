@@ -1,10 +1,18 @@
 {
-  "dataServiceGeneratorVersion": "0.6.5",
+  "dataServiceGeneratorVersion": "0.7.0",
   "appInfo": {
-    "name": "My app",
+    "name": "TeleCRM",
     "description": "",
-    "version": "9t78jjiu",
+    "version": "1ng7xgwt",
     "id": "ckqccwizq10485861bs6qkt55dzy",
-    "url": "https://app.amplication.com/ckqccwizq10485861bs6qkt55dzy"
+    "url": "https://app.amplication.com/ckqccwizq10485861bs6qkt55dzy",
+    "settings": {
+      "dbHost": "localhost",
+      "dbName": "",
+      "dbPassword": "admin",
+      "dbPort": 5432,
+      "dbUser": "admin",
+      "appId": "ckqccwizq10485861bs6qkt55dzy"
+    }
   }
 }

@@ -4,9 +4,9 @@ import { PackageWhereUniqueInput } from "../package/PackageWhereUniqueInput";
 
 export type SimCardUpdateInput = {
   activationDay?: Date | null;
-  company?: CompanyWhereUniqueInput | null;
+  company?: CompanyWhereUniqueInput;
   c_id?: string | null;
-  customer?: CustomerWhereUniqueInput;
+  customer?: CustomerWhereUniqueInput | null;
   number?: string;
   package?: PackageWhereUniqueInput | null;
 };

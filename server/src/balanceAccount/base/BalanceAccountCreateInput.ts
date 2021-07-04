@@ -1,28 +1,41 @@
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsOptional, ValidateNested } from "class-validator";
+import { IsNumber, ValidateNested, IsOptional } from "class-validator";
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
 import { Type } from "class-transformer";
+import { PaymentLedgerWhereUniqueInput } from "../../paymentLedger/base/PaymentLedgerWhereUniqueInput";
 @InputType()
 class BalanceAccountCreateInput {
   @ApiProperty({
-    required: false,
+    required: true,
     type: Number,
   })
   @IsNumber()
-  @IsOptional()
-  @Field(() => Number, {
-    nullable: true,
-  })
-  balance?: number | null;
+  @Field(() => Number)
+  balance!: number;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => CustomerWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => CustomerWhereUniqueInput)
-  @Field(() => CustomerWhereUniqueInput)
-  customer!: CustomerWhereUniqueInput;
+  @IsOptional()
+  @Field(() => CustomerWhereUniqueInput, {
+    nullable: true,
+  })
+  customer?: CustomerWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentLedgerWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedgerWhereUniqueInput)
+  @IsOptional()
+  @Field(() => PaymentLedgerWhereUniqueInput, {
+    nullable: true,
+  })
+  paymentLedger?: PaymentLedgerWhereUniqueInput | null;
 }
 export { BalanceAccountCreateInput };
