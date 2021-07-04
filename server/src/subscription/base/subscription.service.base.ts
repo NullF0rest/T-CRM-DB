@@ -1,5 +1,12 @@
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Subscription, Customer } from "@prisma/client";
+import {
+  Prisma,
+  Subscription,
+  BalanceAccount,
+  Customer,
+  Invoice,
+  PaymentLedger,
+} from "@prisma/client";
 
 export class SubscriptionServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -36,11 +43,38 @@ export class SubscriptionServiceBase {
     return this.prisma.subscription.delete(args);
   }
 
+  async findBalanceAccounts(
+    parentId: string,
+    args: Prisma.BalanceAccountFindManyArgs
+  ): Promise<BalanceAccount[]> {
+    return this.prisma.subscription
+      .findUnique({
+        where: { id: parentId },
+      })
+      .balanceAccounts(args);
+  }
+
   async getCustomer(parentId: string): Promise<Customer | null> {
     return this.prisma.subscription
       .findUnique({
         where: { id: parentId },
       })
       .customer();
+  }
+
+  async getInvoice(parentId: string): Promise<Invoice | null> {
+    return this.prisma.subscription
+      .findUnique({
+        where: { id: parentId },
+      })
+      .invoice();
+  }
+
+  async getPaymentLedger(parentId: string): Promise<PaymentLedger | null> {
+    return this.prisma.subscription
+      .findUnique({
+        where: { id: parentId },
+      })
+      .paymentLedger();
   }
 }

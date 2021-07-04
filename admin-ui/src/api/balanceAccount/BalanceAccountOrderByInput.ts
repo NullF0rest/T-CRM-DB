@@ -5,5 +5,7 @@ export type BalanceAccountOrderByInput = {
   createdAt?: SortOrder;
   customerId?: SortOrder;
   id?: SortOrder;
+  paymentLedgerId?: SortOrder;
+  subscriptionId?: SortOrder;
   updatedAt?: SortOrder;
 };

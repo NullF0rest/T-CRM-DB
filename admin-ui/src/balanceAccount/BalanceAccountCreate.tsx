@@ -8,6 +8,8 @@ import {
   SelectInput,
 } from "react-admin";
 import { CustomerTitle } from "../customer/CustomerTitle";
+import { PaymentLedgerTitle } from "../paymentLedger/PaymentLedgerTitle";
+import { SubscriptionTitle } from "../subscription/SubscriptionTitle";
 
 export const BalanceAccountCreate = (
   props: CreateProps
@@ -22,6 +24,20 @@ export const BalanceAccountCreate = (
           label="Customer"
         >
           <SelectInput optionText={CustomerTitle} />
+        </ReferenceInput>
+        <ReferenceInput
+          source="paymentledger.id"
+          reference="PaymentLedger"
+          label="PaymentLedger"
+        >
+          <SelectInput optionText={PaymentLedgerTitle} />
+        </ReferenceInput>
+        <ReferenceInput
+          source="subscription.id"
+          reference="Subscription"
+          label="Subscriptions"
+        >
+          <SelectInput optionText={SubscriptionTitle} />
         </ReferenceInput>
       </SimpleForm>
     </Create>

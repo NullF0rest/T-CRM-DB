@@ -10,6 +10,8 @@ import {
 } from "class-validator";
 import { BalanceAccount } from "../../balanceAccount/base/BalanceAccount";
 import { Type } from "class-transformer";
+import { Invoice } from "../../invoice/base/Invoice";
+import { PaymentLedger } from "../../paymentLedger/base/PaymentLedger";
 import { EnumTransactionType } from "./EnumTransactionType";
 @ObjectType()
 class Transaction {
@@ -25,13 +27,12 @@ class Transaction {
   amount!: number | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => BalanceAccount,
   })
   @ValidateNested()
   @Type(() => BalanceAccount)
-  @IsOptional()
-  balanceAccount?: BalanceAccount | null;
+  balanceAccount?: BalanceAccount;
 
   @ApiProperty({
     required: true,
@@ -48,6 +49,15 @@ class Transaction {
   @IsString()
   @Field(() => String)
   id!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => Invoice,
+  })
+  @ValidateNested()
+  @Type(() => Invoice)
+  @IsOptional()
+  invoices?: Invoice | null;
 
   @ApiProperty({
     required: false,
@@ -81,6 +91,15 @@ class Transaction {
     nullable: true,
   })
   notes!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentLedger,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedger)
+  @IsOptional()
+  paymentLedger?: PaymentLedger | null;
 
   @ApiProperty({
     required: true,

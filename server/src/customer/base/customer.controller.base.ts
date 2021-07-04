@@ -68,17 +68,19 @@ export class CustomerControllerBase {
             }
           : undefined,
 
-        balanceAccount: data.balanceAccount
+        balanceAccount: {
+          connect: data.balanceAccount,
+        },
+
+        paymentLedgers: data.paymentLedgers
           ? {
-              connect: data.balanceAccount,
+              connect: data.paymentLedgers,
             }
           : undefined,
 
-        subscriptions: data.subscriptions
-          ? {
-              connect: data.subscriptions,
-            }
-          : undefined,
+        subscriptions: {
+          connect: data.subscriptions,
+        },
       },
       select: {
         address: {
@@ -102,6 +104,13 @@ export class CustomerControllerBase {
         isDeleted: true,
         nationalId: true,
         notes: true,
+
+        paymentLedgers: {
+          select: {
+            id: true,
+          },
+        },
+
         phoneNumber: true,
         status: true,
 
@@ -167,6 +176,13 @@ export class CustomerControllerBase {
         isDeleted: true,
         nationalId: true,
         notes: true,
+
+        paymentLedgers: {
+          select: {
+            id: true,
+          },
+        },
+
         phoneNumber: true,
         status: true,
 
@@ -227,6 +243,13 @@ export class CustomerControllerBase {
         isDeleted: true,
         nationalId: true,
         notes: true,
+
+        paymentLedgers: {
+          select: {
+            id: true,
+          },
+        },
+
         phoneNumber: true,
         status: true,
 
@@ -294,17 +317,19 @@ export class CustomerControllerBase {
               }
             : undefined,
 
-          balanceAccount: data.balanceAccount
+          balanceAccount: {
+            connect: data.balanceAccount,
+          },
+
+          paymentLedgers: data.paymentLedgers
             ? {
-                connect: data.balanceAccount,
+                connect: data.paymentLedgers,
               }
             : undefined,
 
-          subscriptions: data.subscriptions
-            ? {
-                connect: data.subscriptions,
-              }
-            : undefined,
+          subscriptions: {
+            connect: data.subscriptions,
+          },
         },
         select: {
           address: {
@@ -328,6 +353,13 @@ export class CustomerControllerBase {
           isDeleted: true,
           nationalId: true,
           notes: true,
+
+          paymentLedgers: {
+            select: {
+              id: true,
+            },
+          },
+
           phoneNumber: true,
           status: true,
 
@@ -389,6 +421,13 @@ export class CustomerControllerBase {
           isDeleted: true,
           nationalId: true,
           notes: true,
+
+          paymentLedgers: {
+            select: {
+              id: true,
+            },
+          },
+
           phoneNumber: true,
           status: true,
 

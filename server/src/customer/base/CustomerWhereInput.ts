@@ -9,6 +9,7 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { BooleanFilter } from "../../util/BooleanFilter";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
+import { PaymentLedgerWhereUniqueInput } from "../../paymentLedger/base/PaymentLedgerWhereUniqueInput";
 import { EnumCustomerStatus } from "./EnumCustomerStatus";
 import { SubscriptionWhereUniqueInput } from "../../subscription/base/SubscriptionWhereUniqueInput";
 @InputType()
@@ -124,6 +125,18 @@ class CustomerWhereInput {
     nullable: true,
   })
   notes?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentLedgerWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedgerWhereUniqueInput)
+  @IsOptional()
+  @Field(() => PaymentLedgerWhereUniqueInput, {
+    nullable: true,
+  })
+  paymentLedgers?: PaymentLedgerWhereUniqueInput;
 
   @ApiProperty({
     required: false,

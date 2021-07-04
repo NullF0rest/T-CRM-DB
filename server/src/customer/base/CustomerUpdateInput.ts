@@ -11,6 +11,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { BalanceAccountWhereUniqueInput } from "../../balanceAccount/base/BalanceAccountWhereUniqueInput";
+import { PaymentLedgerWhereUniqueInput } from "../../paymentLedger/base/PaymentLedgerWhereUniqueInput";
 import { EnumCustomerStatus } from "./EnumCustomerStatus";
 import { SubscriptionWhereUniqueInput } from "../../subscription/base/SubscriptionWhereUniqueInput";
 @InputType()
@@ -37,7 +38,7 @@ class CustomerUpdateInput {
   @Field(() => BalanceAccountWhereUniqueInput, {
     nullable: true,
   })
-  balanceAccount?: BalanceAccountWhereUniqueInput | null;
+  balanceAccount?: BalanceAccountWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -118,6 +119,18 @@ class CustomerUpdateInput {
 
   @ApiProperty({
     required: false,
+    type: () => PaymentLedgerWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedgerWhereUniqueInput)
+  @IsOptional()
+  @Field(() => PaymentLedgerWhereUniqueInput, {
+    nullable: true,
+  })
+  paymentLedgers?: PaymentLedgerWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -148,6 +161,6 @@ class CustomerUpdateInput {
   @Field(() => SubscriptionWhereUniqueInput, {
     nullable: true,
   })
-  subscriptions?: SubscriptionWhereUniqueInput | null;
+  subscriptions?: SubscriptionWhereUniqueInput;
 }
 export { CustomerUpdateInput };

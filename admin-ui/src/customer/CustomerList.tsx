@@ -13,6 +13,7 @@ import {
 import Pagination from "../Components/Pagination";
 import { ADDRESS_TITLE_FIELD } from "../address/AddressTitle";
 import { BALANCEACCOUNT_TITLE_FIELD } from "../balanceAccount/BalanceAccountTitle";
+import { PAYMENTLEDGER_TITLE_FIELD } from "../paymentLedger/PaymentLedgerTitle";
 import { SUBSCRIPTION_TITLE_FIELD } from "../subscription/SubscriptionTitle";
 
 export const CustomerList = (props: ListProps): React.ReactElement => {
@@ -44,6 +45,13 @@ export const CustomerList = (props: ListProps): React.ReactElement => {
         <BooleanField label="Is Deleted" source="isDeleted" />
         <TextField label="National ID" source="nationalId" />
         <TextField label="Notes" source="notes" />
+        <ReferenceField
+          label="PaymentLedgers"
+          source="paymentledger.id"
+          reference="PaymentLedger"
+        >
+          <TextField source={PAYMENTLEDGER_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="Phone Number" source="phoneNumber" />
         <TextField label="Status" source="status" />
         <ReferenceField

@@ -7,6 +7,7 @@ import {
   CustomerSnapshot,
   Address,
   BalanceAccount,
+  PaymentLedger,
   Subscription,
 } from "@prisma/client";
 
@@ -81,6 +82,14 @@ export class CustomerServiceBase {
         where: { id: parentId },
       })
       .balanceAccount();
+  }
+
+  async getPaymentLedgers(parentId: string): Promise<PaymentLedger | null> {
+    return this.prisma.customer
+      .findUnique({
+        where: { id: parentId },
+      })
+      .paymentLedgers();
   }
 
   async getSubscriptions(parentId: string): Promise<Subscription | null> {

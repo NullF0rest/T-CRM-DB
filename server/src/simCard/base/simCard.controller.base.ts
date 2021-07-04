@@ -62,15 +62,15 @@ export class SimCardControllerBase {
       data: {
         ...data,
 
-        company: data.company
+        company: {
+          connect: data.company,
+        },
+
+        customer: data.customer
           ? {
-              connect: data.company,
+              connect: data.customer,
             }
           : undefined,
-
-        customer: {
-          connect: data.customer,
-        },
 
         package: data.package
           ? {
@@ -274,15 +274,15 @@ export class SimCardControllerBase {
         data: {
           ...data,
 
-          company: data.company
+          company: {
+            connect: data.company,
+          },
+
+          customer: data.customer
             ? {
-                connect: data.company,
+                connect: data.customer,
               }
             : undefined,
-
-          customer: {
-            connect: data.customer,
-          },
 
           package: data.package
             ? {

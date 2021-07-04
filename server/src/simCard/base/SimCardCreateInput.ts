@@ -19,16 +19,13 @@ class SimCardCreateInput {
   activationDay?: Date | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => CompanyWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => CompanyWhereUniqueInput)
-  @IsOptional()
-  @Field(() => CompanyWhereUniqueInput, {
-    nullable: true,
-  })
-  company?: CompanyWhereUniqueInput | null;
+  @Field(() => CompanyWhereUniqueInput)
+  company!: CompanyWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -42,13 +39,16 @@ class SimCardCreateInput {
   c_id?: string | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => CustomerWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => CustomerWhereUniqueInput)
-  @Field(() => CustomerWhereUniqueInput)
-  customer!: CustomerWhereUniqueInput;
+  @IsOptional()
+  @Field(() => CustomerWhereUniqueInput, {
+    nullable: true,
+  })
+  customer?: CustomerWhereUniqueInput | null;
 
   @ApiProperty({
     required: true,

@@ -15,6 +15,8 @@ import { TransactionFindManyArgs } from "./TransactionFindManyArgs";
 import { TransactionFindUniqueArgs } from "./TransactionFindUniqueArgs";
 import { Transaction } from "./Transaction";
 import { BalanceAccount } from "../../balanceAccount/base/BalanceAccount";
+import { Invoice } from "../../invoice/base/Invoice";
+import { PaymentLedger } from "../../paymentLedger/base/PaymentLedger";
 import { TransactionService } from "../transaction.service";
 
 @graphql.Resolver(() => Transaction)
@@ -124,9 +126,19 @@ export class TransactionResolverBase {
       data: {
         ...args.data,
 
-        balanceAccount: args.data.balanceAccount
+        balanceAccount: {
+          connect: args.data.balanceAccount,
+        },
+
+        invoices: args.data.invoices
           ? {
-              connect: args.data.balanceAccount,
+              connect: args.data.invoices,
+            }
+          : undefined,
+
+        paymentLedger: args.data.paymentLedger
+          ? {
+              connect: args.data.paymentLedger,
             }
           : undefined,
       },
@@ -171,9 +183,19 @@ export class TransactionResolverBase {
         data: {
           ...args.data,
 
-          balanceAccount: args.data.balanceAccount
+          balanceAccount: {
+            connect: args.data.balanceAccount,
+          },
+
+          invoices: args.data.invoices
             ? {
-                connect: args.data.balanceAccount,
+                connect: args.data.invoices,
+              }
+            : undefined,
+
+          paymentLedger: args.data.paymentLedger
+            ? {
+                connect: args.data.paymentLedger,
               }
             : undefined,
         },
@@ -227,6 +249,54 @@ export class TransactionResolverBase {
       resource: "BalanceAccount",
     });
     const result = await this.service.getBalanceAccount(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
+  }
+
+  @graphql.ResolveField(() => Invoice, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Transaction",
+    action: "read",
+    possession: "any",
+  })
+  async invoices(
+    @graphql.Parent() parent: Transaction,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Invoice | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Invoice",
+    });
+    const result = await this.service.getInvoices(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
+  }
+
+  @graphql.ResolveField(() => PaymentLedger, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Transaction",
+    action: "read",
+    possession: "any",
+  })
+  async paymentLedger(
+    @graphql.Parent() parent: Transaction,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<PaymentLedger | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "PaymentLedger",
+    });
+    const result = await this.service.getPaymentLedger(parent.id);
 
     if (!result) {
       return null;

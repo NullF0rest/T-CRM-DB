@@ -15,6 +15,8 @@ import { SubscriptionWhereUniqueInput } from "./SubscriptionWhereUniqueInput";
 import { SubscriptionFindManyArgs } from "./SubscriptionFindManyArgs";
 import { SubscriptionUpdateInput } from "./SubscriptionUpdateInput";
 import { Subscription } from "./Subscription";
+import { BalanceAccountWhereInput } from "../../balanceAccount/base/BalanceAccountWhereInput";
+import { BalanceAccount } from "../../balanceAccount/base/BalanceAccount";
 
 export class SubscriptionControllerBase {
   constructor(
@@ -63,6 +65,18 @@ export class SubscriptionControllerBase {
               connect: data.customer,
             }
           : undefined,
+
+        invoice: data.invoice
+          ? {
+              connect: data.invoice,
+            }
+          : undefined,
+
+        paymentLedger: data.paymentLedger
+          ? {
+              connect: data.paymentLedger,
+            }
+          : undefined,
       },
       select: {
         createdAt: true,
@@ -74,6 +88,19 @@ export class SubscriptionControllerBase {
         },
 
         id: true,
+
+        invoice: {
+          select: {
+            id: true,
+          },
+        },
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -118,6 +145,19 @@ export class SubscriptionControllerBase {
         },
 
         id: true,
+
+        invoice: {
+          select: {
+            id: true,
+          },
+        },
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -157,6 +197,19 @@ export class SubscriptionControllerBase {
         },
 
         id: true,
+
+        invoice: {
+          select: {
+            id: true,
+          },
+        },
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -214,6 +267,18 @@ export class SubscriptionControllerBase {
                 connect: data.customer,
               }
             : undefined,
+
+          invoice: data.invoice
+            ? {
+                connect: data.invoice,
+              }
+            : undefined,
+
+          paymentLedger: data.paymentLedger
+            ? {
+                connect: data.paymentLedger,
+              }
+            : undefined,
         },
         select: {
           createdAt: true,
@@ -225,6 +290,19 @@ export class SubscriptionControllerBase {
           },
 
           id: true,
+
+          invoice: {
+            select: {
+              id: true,
+            },
+          },
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -265,6 +343,19 @@ export class SubscriptionControllerBase {
           },
 
           id: true,
+
+          invoice: {
+            select: {
+              id: true,
+            },
+          },
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -276,5 +367,188 @@ export class SubscriptionControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Get("/:id/balanceAccounts")
+  @nestAccessControl.UseRoles({
+    resource: "Subscription",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiQuery({
+    type: () => BalanceAccountWhereInput,
+    style: "deepObject",
+    explode: true,
+  })
+  async findManyBalanceAccounts(
+    @common.Req() request: Request,
+    @common.Param() params: SubscriptionWhereUniqueInput,
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<BalanceAccount[]> {
+    const query: BalanceAccountWhereInput = request.query;
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "BalanceAccount",
+    });
+    const results = await this.service.findBalanceAccounts(params.id, {
+      where: query,
+      select: {
+        balance: true,
+        createdAt: true,
+
+        customer: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
+        subscription: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+      },
+    });
+    return results.map((result) => permission.filter(result));
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Post("/:id/balanceAccounts")
+  @nestAccessControl.UseRoles({
+    resource: "Subscription",
+    action: "update",
+    possession: "any",
+  })
+  async createBalanceAccounts(
+    @common.Param() params: SubscriptionWhereUniqueInput,
+    @common.Body() body: SubscriptionWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      balanceAccounts: {
+        connect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Subscription",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Subscription"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Patch("/:id/balanceAccounts")
+  @nestAccessControl.UseRoles({
+    resource: "Subscription",
+    action: "update",
+    possession: "any",
+  })
+  async updateBalanceAccounts(
+    @common.Param() params: SubscriptionWhereUniqueInput,
+    @common.Body() body: SubscriptionWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      balanceAccounts: {
+        set: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Subscription",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Subscription"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(basicAuthGuard.BasicAuthGuard, nestAccessControl.ACGuard)
+  @common.Delete("/:id/balanceAccounts")
+  @nestAccessControl.UseRoles({
+    resource: "Subscription",
+    action: "update",
+    possession: "any",
+  })
+  async deleteBalanceAccounts(
+    @common.Param() params: SubscriptionWhereUniqueInput,
+    @common.Body() body: SubscriptionWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      balanceAccounts: {
+        disconnect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Subscription",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Subscription"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

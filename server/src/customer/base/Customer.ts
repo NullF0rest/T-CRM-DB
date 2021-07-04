@@ -11,6 +11,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { BalanceAccount } from "../../balanceAccount/base/BalanceAccount";
+import { PaymentLedger } from "../../paymentLedger/base/PaymentLedger";
 import { SimCard } from "../../simCard/base/SimCard";
 import { CustomerSnapshot } from "../../customerSnapshot/base/CustomerSnapshot";
 import { EnumCustomerStatus } from "./EnumCustomerStatus";
@@ -27,13 +28,12 @@ class Customer {
   address?: Address;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => BalanceAccount,
   })
   @ValidateNested()
   @Type(() => BalanceAccount)
-  @IsOptional()
-  balanceAccount?: BalanceAccount | null;
+  balanceAccount?: BalanceAccount;
 
   @ApiProperty({
     required: true,
@@ -124,6 +124,15 @@ class Customer {
 
   @ApiProperty({
     required: false,
+    type: () => PaymentLedger,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedger)
+  @IsOptional()
+  paymentLedgers?: PaymentLedger | null;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -163,13 +172,12 @@ class Customer {
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany" | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => Subscription,
   })
   @ValidateNested()
   @Type(() => Subscription)
-  @IsOptional()
-  subscriptions?: Subscription | null;
+  subscriptions?: Subscription;
 
   @ApiProperty({
     required: true,
