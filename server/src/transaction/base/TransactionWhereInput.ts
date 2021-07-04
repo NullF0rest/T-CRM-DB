@@ -5,7 +5,9 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { BalanceAccountWhereUniqueInput } from "../../balanceAccount/base/BalanceAccountWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
+import { InvoiceWhereUniqueInput } from "../../invoice/base/InvoiceWhereUniqueInput";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { PaymentLedgerWhereUniqueInput } from "../../paymentLedger/base/PaymentLedgerWhereUniqueInput";
 import { DateTimeFilter } from "../../util/DateTimeFilter";
 import { EnumTransactionType } from "./EnumTransactionType";
 @InputType()
@@ -46,6 +48,18 @@ class TransactionWhereInput {
 
   @ApiProperty({
     required: false,
+    type: () => InvoiceWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => InvoiceWhereUniqueInput)
+  @IsOptional()
+  @Field(() => InvoiceWhereUniqueInput, {
+    nullable: true,
+  })
+  invoices?: InvoiceWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
     type: StringNullableFilter,
   })
   @Type(() => StringNullableFilter)
@@ -76,6 +90,18 @@ class TransactionWhereInput {
     nullable: true,
   })
   notes?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentLedgerWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentLedgerWhereUniqueInput)
+  @IsOptional()
+  @Field(() => PaymentLedgerWhereUniqueInput, {
+    nullable: true,
+  })
+  paymentLedger?: PaymentLedgerWhereUniqueInput;
 
   @ApiProperty({
     required: false,

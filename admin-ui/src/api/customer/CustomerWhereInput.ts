@@ -5,6 +5,7 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { BooleanFilter } from "../../util/BooleanFilter";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
+import { PaymentLedgerWhereUniqueInput } from "../paymentLedger/PaymentLedgerWhereUniqueInput";
 import { SubscriptionWhereUniqueInput } from "../subscription/SubscriptionWhereUniqueInput";
 
 export type CustomerWhereInput = {
@@ -18,6 +19,7 @@ export type CustomerWhereInput = {
   isDeleted?: BooleanNullableFilter;
   nationalId?: StringNullableFilter;
   notes?: StringNullableFilter;
+  paymentLedgers?: PaymentLedgerWhereUniqueInput;
   phoneNumber?: StringNullableFilter;
   status?: "Holiday" | "Retired" | "Working" | "OutOfCompany";
   subscriptions?: SubscriptionWhereUniqueInput;

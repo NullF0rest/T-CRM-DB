@@ -12,6 +12,7 @@ export type CustomerOrderByInput = {
   isDeleted?: SortOrder;
   nationalId?: SortOrder;
   notes?: SortOrder;
+  paymentLedgersId?: SortOrder;
   phoneNumber?: SortOrder;
   status?: SortOrder;
   subscriptionsId?: SortOrder;

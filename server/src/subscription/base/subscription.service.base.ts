@@ -1,5 +1,11 @@
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Subscription, Customer } from "@prisma/client";
+import {
+  Prisma,
+  Subscription,
+  Customer,
+  Invoice,
+  PaymentLedger,
+} from "@prisma/client";
 
 export class SubscriptionServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -42,5 +48,21 @@ export class SubscriptionServiceBase {
         where: { id: parentId },
       })
       .customer();
+  }
+
+  async getInvoice(parentId: string): Promise<Invoice | null> {
+    return this.prisma.subscription
+      .findUnique({
+        where: { id: parentId },
+      })
+      .invoice();
+  }
+
+  async getPaymentLedger(parentId: string): Promise<PaymentLedger | null> {
+    return this.prisma.subscription
+      .findUnique({
+        where: { id: parentId },
+      })
+      .paymentLedger();
   }
 }

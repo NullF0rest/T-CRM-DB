@@ -15,6 +15,8 @@ import { SubscriptionFindManyArgs } from "./SubscriptionFindManyArgs";
 import { SubscriptionFindUniqueArgs } from "./SubscriptionFindUniqueArgs";
 import { Subscription } from "./Subscription";
 import { Customer } from "../../customer/base/Customer";
+import { Invoice } from "../../invoice/base/Invoice";
+import { PaymentLedger } from "../../paymentLedger/base/PaymentLedger";
 import { SubscriptionService } from "../subscription.service";
 
 @graphql.Resolver(() => Subscription)
@@ -129,6 +131,18 @@ export class SubscriptionResolverBase {
               connect: args.data.customer,
             }
           : undefined,
+
+        invoice: args.data.invoice
+          ? {
+              connect: args.data.invoice,
+            }
+          : undefined,
+
+        paymentLedger: args.data.paymentLedger
+          ? {
+              connect: args.data.paymentLedger,
+            }
+          : undefined,
       },
     });
   }
@@ -174,6 +188,18 @@ export class SubscriptionResolverBase {
           customer: args.data.customer
             ? {
                 connect: args.data.customer,
+              }
+            : undefined,
+
+          invoice: args.data.invoice
+            ? {
+                connect: args.data.invoice,
+              }
+            : undefined,
+
+          paymentLedger: args.data.paymentLedger
+            ? {
+                connect: args.data.paymentLedger,
               }
             : undefined,
         },
@@ -227,6 +253,54 @@ export class SubscriptionResolverBase {
       resource: "Customer",
     });
     const result = await this.service.getCustomer(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
+  }
+
+  @graphql.ResolveField(() => Invoice, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Subscription",
+    action: "read",
+    possession: "any",
+  })
+  async invoice(
+    @graphql.Parent() parent: Subscription,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Invoice | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Invoice",
+    });
+    const result = await this.service.getInvoice(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
+  }
+
+  @graphql.ResolveField(() => PaymentLedger, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Subscription",
+    action: "read",
+    possession: "any",
+  })
+  async paymentLedger(
+    @graphql.Parent() parent: Subscription,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<PaymentLedger | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "PaymentLedger",
+    });
+    const result = await this.service.getPaymentLedger(parent.id);
 
     if (!result) {
       return null;

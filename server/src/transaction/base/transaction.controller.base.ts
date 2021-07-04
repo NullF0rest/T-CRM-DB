@@ -58,9 +58,19 @@ export class TransactionControllerBase {
       data: {
         ...data,
 
-        balanceAccount: data.balanceAccount
+        balanceAccount: {
+          connect: data.balanceAccount,
+        },
+
+        invoices: data.invoices
           ? {
-              connect: data.balanceAccount,
+              connect: data.invoices,
+            }
+          : undefined,
+
+        paymentLedger: data.paymentLedger
+          ? {
+              connect: data.paymentLedger,
             }
           : undefined,
       },
@@ -75,9 +85,23 @@ export class TransactionControllerBase {
 
         createdAt: true,
         id: true,
+
+        invoices: {
+          select: {
+            id: true,
+          },
+        },
+
         method: true,
         name: true,
         notes: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         Time: true,
         type: true,
         updatedAt: true,
@@ -125,9 +149,23 @@ export class TransactionControllerBase {
 
         createdAt: true,
         id: true,
+
+        invoices: {
+          select: {
+            id: true,
+          },
+        },
+
         method: true,
         name: true,
         notes: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         Time: true,
         type: true,
         updatedAt: true,
@@ -170,9 +208,23 @@ export class TransactionControllerBase {
 
         createdAt: true,
         id: true,
+
+        invoices: {
+          select: {
+            id: true,
+          },
+        },
+
         method: true,
         name: true,
         notes: true,
+
+        paymentLedger: {
+          select: {
+            id: true,
+          },
+        },
+
         Time: true,
         type: true,
         updatedAt: true,
@@ -227,9 +279,19 @@ export class TransactionControllerBase {
         data: {
           ...data,
 
-          balanceAccount: data.balanceAccount
+          balanceAccount: {
+            connect: data.balanceAccount,
+          },
+
+          invoices: data.invoices
             ? {
-                connect: data.balanceAccount,
+                connect: data.invoices,
+              }
+            : undefined,
+
+          paymentLedger: data.paymentLedger
+            ? {
+                connect: data.paymentLedger,
               }
             : undefined,
         },
@@ -244,9 +306,23 @@ export class TransactionControllerBase {
 
           createdAt: true,
           id: true,
+
+          invoices: {
+            select: {
+              id: true,
+            },
+          },
+
           method: true,
           name: true,
           notes: true,
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
           Time: true,
           type: true,
           updatedAt: true,
@@ -290,9 +366,23 @@ export class TransactionControllerBase {
 
           createdAt: true,
           id: true,
+
+          invoices: {
+            select: {
+              id: true,
+            },
+          },
+
           method: true,
           name: true,
           notes: true,
+
+          paymentLedger: {
+            select: {
+              id: true,
+            },
+          },
+
           Time: true,
           type: true,
           updatedAt: true,

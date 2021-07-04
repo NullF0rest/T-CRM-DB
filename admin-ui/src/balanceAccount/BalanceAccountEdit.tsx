@@ -8,6 +8,7 @@ import {
   SelectInput,
 } from "react-admin";
 import { CustomerTitle } from "../customer/CustomerTitle";
+import { PaymentLedgerTitle } from "../paymentLedger/PaymentLedgerTitle";
 
 export const BalanceAccountEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -20,6 +21,13 @@ export const BalanceAccountEdit = (props: EditProps): React.ReactElement => {
           label="Customer"
         >
           <SelectInput optionText={CustomerTitle} />
+        </ReferenceInput>
+        <ReferenceInput
+          source="paymentledger.id"
+          reference="PaymentLedger"
+          label="PaymentLedger"
+        >
+          <SelectInput optionText={PaymentLedgerTitle} />
         </ReferenceInput>
       </SimpleForm>
     </Edit>

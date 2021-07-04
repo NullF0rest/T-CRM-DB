@@ -1,9 +1,11 @@
-import { FloatNullableFilter } from "../../util/FloatNullableFilter";
+import { FloatFilter } from "../../util/FloatFilter";
 import { CustomerWhereUniqueInput } from "../customer/CustomerWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
+import { PaymentLedgerWhereUniqueInput } from "../paymentLedger/PaymentLedgerWhereUniqueInput";
 
 export type BalanceAccountWhereInput = {
-  balance?: FloatNullableFilter;
+  balance?: FloatFilter;
   customer?: CustomerWhereUniqueInput;
   id?: StringFilter;
+  paymentLedger?: PaymentLedgerWhereUniqueInput;
 };

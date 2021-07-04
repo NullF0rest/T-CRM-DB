@@ -130,15 +130,15 @@ export class SimCardResolverBase {
       data: {
         ...args.data,
 
-        company: args.data.company
+        company: {
+          connect: args.data.company,
+        },
+
+        customer: args.data.customer
           ? {
-              connect: args.data.company,
+              connect: args.data.customer,
             }
           : undefined,
-
-        customer: {
-          connect: args.data.customer,
-        },
 
         package: args.data.package
           ? {
@@ -187,15 +187,15 @@ export class SimCardResolverBase {
         data: {
           ...args.data,
 
-          company: args.data.company
+          company: {
+            connect: args.data.company,
+          },
+
+          customer: args.data.customer
             ? {
-                connect: args.data.company,
+                connect: args.data.customer,
               }
             : undefined,
-
-          customer: {
-            connect: args.data.customer,
-          },
 
           package: args.data.package
             ? {
